@@ -1,17 +1,23 @@
 # {{ ansible_managed }}
+# adapted from https://github.com/nats-io/nats-server/blob/v2.10.21/util/nats-server.service
 
 [Unit]
-Description="NATS Server"
-After=network.target
+Description=NATS Server
+After=network-online.target ntp.service
 
 [Service]
 Type=simple
 LimitNOFILE=500000
 RestartSec=5s
 Restart=on-failure
-ExecStop=/bin/kill -s SIGINT $MAINPID
+PrivateTmp=true
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStart=/usr/local/bin/nats-server -c /etc/nats-server.conf
+ExecStop=/bin/kill -s SIGINT $MAINPID
+User=nats
+Group=nats
+# The nats-server uses SIGUSR2 to trigger using Lame Duck Mode (LDM) shutdown
+KillSignal=SIGUSR2
 
 [Install]
 WantedBy=multi-user.target
