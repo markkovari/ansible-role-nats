@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     state: present
     deb: "https://github.com/nats-io/nats-server/releases/download/\
-      v{{ nats_version }}/nats-server-v{{ nats_version }}-amd64.deb"
+      v{{ nats_version }}/nats-server-v{{ nats_version }}-{{ nats_server_arch }}.deb"
 
 - name: Create the "nats" user & group
   ansible.builtin.import_tasks:
