@@ -5,6 +5,10 @@
     deb: "https://github.com/nats-io/nats-server/releases/download/\
       v{{ nats_version }}/nats-server-v{{ nats_version }}-amd64.deb"
 
+- name: Create the "nats" user & group
+  ansible.builtin.import_tasks:
+    file: user-group-nats.yaml
+
 - name: Ensure NATS service file is available.
   ansible.builtin.template:
     src: nats-server.service.j2

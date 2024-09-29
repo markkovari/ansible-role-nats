@@ -1,0 +1,11 @@
+- name: Create the "nats" group
+  ansible.builtin.group:
+    name: nats
+- name: Create the "nats" user
+  ansible.builtin.user:
+    name: nats
+    comment: "NATS user"
+    create_home: false
+    group: nats
+    shell: "/usr/sbin/nologin"
+    # system: true
