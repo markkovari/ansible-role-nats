@@ -3,6 +3,7 @@ natscli_enabled: "true"
 natscli_version: "0.1.5"
 
 nats_version: "2.10.21"
+nats_server_name: '{{ ansible_fqdn }}'
 
 nats_cluster_enabled: false
 
