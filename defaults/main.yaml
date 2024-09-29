@@ -16,6 +16,10 @@ nats_exporter_enabled: "true"
 nats_prometheus_exporter_version: "0.15.0"
 nats_exporter_export_channelz: true
 nats_exporter_export_connz: true
+nats_exporter_export_healthz: true
+nats_exporter_export_gatewayz: true
+nats_exporter_export_accstatz: true
+nats_exporter_export_leafz: true
 nats_exporter_export_routez: true
 nats_exporter_export_serverz: true
 nats_exporter_export_subz: true
