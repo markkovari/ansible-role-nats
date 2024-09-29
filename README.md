@@ -17,15 +17,7 @@ This Ansible role installs it and then provide its configuration.
 
 ## Role Variables
 
-```yaml
-nats_version: "2.1.6"
-nats_host_group: "core"
-
-nats_gateway_host_groups: []
-
-nats_exporter_enabled: "true"
-nats_prometheus_exporter_version: "0.6.2"
-```
+[see default variables](defaults/main.yml)
 
 Please note that this Ansible provides a cluster installation of NATS, so you must group your hosts into the cluster and `nats_host_group` specifies the cluster.
 
@@ -33,11 +25,6 @@ Please note that this Ansible provides a cluster installation of NATS, so you mu
 
 ```yaml
 - hosts: some_servers
-  vars:
-    nats_version: "2.1.6"
-    nats_host_group: "some_servers"
-    nats_exporter_enabled: "true"
-    nats_prometheus_exporter_version: "0.6.2"
   roles:
     - nats
 ```
