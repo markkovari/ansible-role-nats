@@ -16,6 +16,7 @@ http_port: 8222
 server_name: {{ ansible_fqdn }}
 #write_deadline: 5s
 
+{% if nats_cluster_enabled %}
 # This is for clustering multiple servers together.
 cluster {
   # Cluster port for inbound route connections from other server on all interfaces
@@ -60,6 +61,7 @@ gateway {
   {% endfor %}
   ]
 }
+{% endif %}
 
 {% if nats_leaf_node_enabled %}
 leafnodes {
