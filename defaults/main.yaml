@@ -14,6 +14,12 @@ nats_cluster_routes_address: ""
 
 nats_exporter_enabled: "true"
 nats_prometheus_exporter_version: "0.15.0"
+nats_exporter_export_channelz: true
+nats_exporter_export_connz: true
+nats_exporter_export_routez: true
+nats_exporter_export_serverz: true
+nats_exporter_export_subz: true
+nats_exporter_export_varz: true
 
 nats_leaf_node_enabled: false
 nats_leaf_node_listen_enabled: false
