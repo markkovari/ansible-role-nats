@@ -29,3 +29,8 @@ nats_exporter_export_varz: true
 nats_leaf_node_enabled: false
 nats_leaf_node_listen_enabled: false
 nats_leaf_node_remotes: []
+
+nats_jetstream_enabled: false
+nats_jetstream_max_mem: '{{ None }}'
+nats_jetstream_max_file: '{{ None }}'
+nats_jetstream_store_dir: '/var/lib/jetstream'

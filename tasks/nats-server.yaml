@@ -28,3 +28,11 @@
     backup: true
   notify:
     - Restart nats-server
+
+- name: Ensure NATS JetStream directory is present
+  ansible.builtin.file:
+    path: '{{ nats_jetstream_store_dir }}'
+    owner: nats
+    group: nats
+    state: directory
+  when: nats_jetstream_enabled and nats_jetstream_store_dir != ''

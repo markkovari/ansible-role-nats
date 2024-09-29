@@ -78,3 +78,17 @@ leafnodes {
   {% endif %}
 }
 {% endif %}
+
+{% if nats_jetstream_enabled %}
+jetstream {
+  {% if nats_jetstream_max_mem %}
+  max_mem: {{ nats_jetstream_max_mem }}
+  {% endif %}
+  {% if nats_jetstream_max_file %}
+  max_file: {{ nats_jetstream_max_file }}
+  {% endif %}
+  {% if nats_jetstream_store_dir %}
+  store_dir: {{ nats_jetstream_store_dir }}
+  {% endif %}
+}
+{% endif %}
