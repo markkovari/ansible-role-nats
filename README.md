@@ -19,7 +19,8 @@ This Ansible role installs it and then provide its configuration.
 
 [see default variables](defaults/main.yml)
 
-Please note that this Ansible provides a cluster installation of NATS, so you must group your hosts into the cluster and `nats_host_group` specifies the cluster. This can be turned off with `nats_cluster_enabled: false`.
+> [!TIP]
+> With `nats_cluster_enabled: true`, this Ansible role will deploy a [cluster installation of NATS](). You must group your hosts into a group and specify this group in `nats_host_group`.
 
 ## Example Playbook
 

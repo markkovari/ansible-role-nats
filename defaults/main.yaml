@@ -4,7 +4,7 @@ natscli_version: "0.1.5"
 
 nats_version: "2.10.21"
 
-nats_cluster_enabled: true
+nats_cluster_enabled: false
 
 nats_host_group: "core"
 nats_gateway_host_groups: []
