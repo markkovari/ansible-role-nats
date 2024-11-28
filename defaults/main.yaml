@@ -19,6 +19,7 @@ nats_cluster_routes_address: ""
 
 nats_exporter_enabled: "true"
 nats_prometheus_exporter_version: "0.15.0"
+nats_prometheus_exporter_architecture: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'armhf' if ansible_architecture == 'armv7l' else 'amd64' }}"
 
 nats_exporter_address: '127.0.0.1'
 nats_exporter_port: 7777
