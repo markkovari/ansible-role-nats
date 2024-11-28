@@ -16,6 +16,19 @@ http_port: 8222
 server_name: {{ nats_server_name }}
 #write_deadline: 5s
 
+accounts: [
+  {
+    {% for account in nats_accounts %}
+    {{ account.name }}: {
+      users: [
+        {% for user in account.users %}
+        { user: {{ user.user }}, password: {{ user.password }} },
+        {% endfor %}
+      ],
+    {% endfor %}
+  }
+]
+
 {% if nats_cluster_enabled %}
 # This is for clustering multiple servers together.
 cluster {
