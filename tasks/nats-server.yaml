@@ -35,6 +35,7 @@
 
 - name: Ensure NATS JetStream directory is present
   ansible.builtin.file:
+    mode: "0755"
     path: '{{ nats_jetstream_store_dir }}'
     owner: nats
     group: nats
