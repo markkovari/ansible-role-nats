@@ -9,19 +9,18 @@ server_name: {{ nats_name }}
 include nats-sys.conf
 
 {% if nats_accounts|length %}
-accounts: [
-  {
-    {% for nats_account in nats_accounts %}
-      {{ nats_account.name }}: {
-        users: [
-          {% for user in nats_account.users %}
-            { user: {{ user.user }}, password: {{ user.password }} },
-          {% endfor %}
-        ],
-      {% endfor %}
-    }
+accounts: {
+  {% for nats_account in nats_accounts %}
+    {{ nats_account.name }}: {
+      jetstream: enabled,
+      users: [
+        {% for user in nats_account.users %}
+          { user: {{ user.user }}, password: {{ user.password }} },
+        {% endfor %}
+      ],
+    {% endfor %}
   }
-]
+}
 {% endif %}
 
 {% if hostvars|length > 1 %}
