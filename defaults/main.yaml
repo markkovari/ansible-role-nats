@@ -38,6 +38,7 @@ nats_sys_password: "password"
 nats_port: 4222
 nats_http_port: 8222
 nats_name: default_server_name
+nats_cluster_name: default_cluster_name
 
 nats_accounts:
   - name: nats_users
