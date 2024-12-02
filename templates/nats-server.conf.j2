@@ -1,94 +1,37 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 # {{ ansible_managed }}
 
-# Client port of 4222 on all interfaces
-port: 4222
 
-{% if nats_client_advertise != "" %}
-# Alternative client listen specification <host>:<port> or just <host> to advertise to clients and other server.
-# Useful in cluster setups with NAT.
-client_advertise: "{{ nats_client_advertise }}"
-{% endif %}
+port: {{ nats_port }}
+http_port: {{ nats_http_port }}
+server_name: {{ nats_name }}
 
-# HTTP monitoring port
-http_port: 8222
+include nats-sys.conf
 
-server_name: {{ nats_server_name }}
-#write_deadline: 5s
-
+{% if nats_accounts|length %}
 accounts: [
   {
-    {% for account in nats_accounts %}
-    {{ account.name }}: {
+  {% for nats_account in nats_accounts %}
+    {{ nats_account.name }}: {
       users: [
-        {% for user in account.users %}
-        { user: {{ user.user }}, password: {{ user.password }} },
+        {% for user in nats_account.users %}
+          { user: {{ user.user }}, password: {{ user.password }} },
         {% endfor %}
       ],
     {% endfor %}
   }
 ]
-
-{% if nats_cluster_enabled %}
-# This is for clustering multiple servers together.
-cluster {
-  # Cluster port for inbound route connections from other server on all interfaces
-  port: 6222
-
-  # Authorization for route connections
-  # Other server can connect if they supply the credentials listed here
-  # This server will connect to discovered routes using this user
-  authorization {
-    user: user
-    password: pwd
-    timeout: 0.75
-  }
-
-  # This server establishes routes with these server.
-  # This server solicits new routes and Routes are actively solicited and connected to from this server.
-  # Other servers can connect to us if they supply the correct credentials
-  # in their routes definitions from above.
-  routes = [
-{% for node in groups[nats_host_group] %}
-    nats-route://user:pwd@{{ hostvars[node].nats_cluster_routes_address | default(hostvars[node].ansible_default_ipv4.address) }}:6222
-{% endfor %}
-  ]
-
-  # Configure number of connect retries for implicit routes
-  connect_retries: 30
-}
-
-gateway {
-  name: {{ nats_host_group }}
-  port: 7222
-  gateways: [
-  {% for group in nats_gateway_host_groups %}
-    {
-      name: {{ group }}
-      urls: [
-      {% for node in groups[group] %}
-        nats://{{ hostvars[node].nats_cluster_routes_address | default(hostvars[node].ansible_default_ipv4.address) }}:7222
-      {% endfor %}
-      ]
-    }
-  {% endfor %}
-  ]
-}
 {% endif %}
 
-{% if nats_leaf_node_enabled %}
-leafnodes {
-  {% if nats_leaf_node_listen_enabled %}
-  port: 7422
-  {% endif %}
-
-  {% if nats_leaf_node_remotes | length > 0 %}
-  remotes: [
-    {% for remote in nats_leaf_node_remotes %}
-    { url: {{ remote.url }} },
-    {% endfor %}
-  ]
-  {% endif %}
+{% if hostvars|length > 1 %}
+cluster: {
+  name: {{ inventory_hostname }},
+  port: {{ (groups['main'] | sort).index(inventory_hostname) + default_nats_cluster_port }},
+  routes: [
+  {% for host in (groups['main'] | sort) %}
+    "nats-route://{{host}}:{{(groups['main'] | sort).index(host) + default_nats_cluster_port}}",
+  {% endfor %}
+  ],
 }
 {% endif %}
 
