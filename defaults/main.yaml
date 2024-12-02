@@ -40,7 +40,7 @@ nats_http_port: 8222
 nats_name: default_server_name
 
 nats_accounts:
-  - name: users
+  - name: nats_users
     jetstream: true
     users:
       - user: "user"
