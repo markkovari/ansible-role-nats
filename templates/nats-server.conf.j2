@@ -44,22 +44,3 @@ jetstream {
   {% endif %}
 }
 {% endif %}
-
-
-cluster: {
-  name: east,
-  port: 6222,
-  routes: [
-    "nats-route://0.0.0.0:6222"
-  ],
-}
-
-gateway: {
-  name: "east",
-  port: 7222,
-  gateways: [
-    {name: "east", urls: ["nats://0.0.0.0:7222"]},
-    {name: "central", urls: ["nats://0.0.0.0:7223"]},
-    {name: "west", urls: ["nats://0.0.0.0:7224"]},
-  ]
-}
