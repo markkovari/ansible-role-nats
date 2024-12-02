@@ -11,14 +11,15 @@ include nats-sys.conf
 {% if nats_accounts|length %}
 accounts: [
   {
-  {% for nats_account in nats_accounts %}
-    {{ nats_account.name }}: {
-      users: [
-        {% for user in nats_account.users %}
-          { user: {{ user.user }}, password: {{ user.password }} },
-        {% endfor %}
-      ],
-    {% endfor %}
+    {% for nats_account in nats_accounts %}
+      {{ nats_account.name }}: {
+        users: [
+          {% for user in nats_account.users %}
+            { user: {{ user.user }}, password: {{ user.password }} },
+          {% endfor %}
+        ],
+      {% endfor %}
+    }
   }
 ]
 {% endif %}
