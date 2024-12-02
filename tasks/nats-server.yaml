@@ -24,6 +24,15 @@
     state: started
     enabled: true
 
+- name: Create or update NATS SYS user file (/etc/nats-sys.conf)
+  ansible.builtin.template:
+    src: nats-sys.conf.j2
+    dest: /etc/nats-sys.conf
+    mode: "0644"
+    backup: true
+  notify:
+    - Restart nats-server
+
 - name: Create or update NATS configuration file (/etc/nats-server.conf)
   ansible.builtin.template:
     src: nats-server.conf.j2
@@ -36,7 +45,7 @@
 - name: Ensure NATS JetStream directory is present
   ansible.builtin.file:
     mode: "0755"
-    path: '{{ nats_jetstream_store_dir }}'
+    path: "{{ nats_jetstream_store_dir }}"
     owner: nats
     group: nats
     state: directory

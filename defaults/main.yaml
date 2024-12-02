@@ -7,21 +7,13 @@ natscli_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'armhf' if a
 nats_version: "2.10.22"
 # adapted from https://github.com/geerlingguy/ansible-role-docker/blob/bb8a21a/defaults/main.yml#L48
 nats_server_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'armhf' if ansible_architecture == 'armv7l' else 'amd64' }}"
-nats_server_name: '{{ ansible_fqdn }}'
-
-nats_cluster_enabled: false
-
-nats_host_group: "core"
-nats_gateway_host_groups: []
-
-nats_client_advertise: ""
-nats_cluster_routes_address: ""
+nats_server_name: "{{ ansible_fqdn }}"
 
 nats_exporter_enabled: "true"
 nats_prometheus_exporter_version: "0.15.0"
 nats_prometheus_exporter_architecture: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'armhf' if ansible_architecture == 'armv7l' else 'amd64' }}"
 
-nats_exporter_address: '127.0.0.1'
+nats_exporter_address: "127.0.0.1"
 nats_exporter_port: 7777
 
 nats_exporter_export_channelz: true
@@ -35,18 +27,19 @@ nats_exporter_export_serverz: true
 nats_exporter_export_subz: true
 nats_exporter_export_varz: true
 
-nats_leaf_node_enabled: false
-nats_leaf_node_listen_enabled: false
-nats_leaf_node_remotes: []
-
 nats_jetstream_enabled: false
-nats_jetstream_max_mem: '{{ None }}'
-nats_jetstream_max_file: '{{ None }}'
-nats_jetstream_store_dir: '/var/lib/jetstream'
+nats_jetstream_max_mem: "{{ None }}"
+nats_jetstream_max_file: "{{ None }}"
+nats_jetstream_store_dir: "/var/lib/jetstream"
 
-nats_accounts:
-  - name: SYS
-    jetstream: true
-    users:
-      - user: "nats"
-        password: "nats"
+nats_sys_user: "sys"
+nats_sys_password: "password"
+
+nats_account:
+  name: user
+  jetstream: true
+  user:
+    user: "nats"
+    password: "nats"
+
+default_cluster_port: 6222
