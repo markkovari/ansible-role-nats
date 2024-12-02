@@ -8,24 +8,28 @@ server_name: {{ nats_name }}
 
 include nats-sys.conf
 
+{% if nats_accounts|length %}
 accounts: [
   {
+  {% for nats_account in nats_accounts %}
     {{ nats_account.name }}: {
       users: [
         {% for user in nats_account.users %}
-        { user: {{ user.user }}, password: {{ user.password }} },
+          { user: {{ user.user }}, password: {{ user.password }} },
         {% endfor %}
       ],
+    {% endfor %}
   }
 ]
+{% endif %}
 
-{% if hostvars[host]|length > 1 %}
+{% if hostvars|length > 1 %}
 cluster: {
-  name: {{hostvars[ansible_hostname].name}},
-  port: {{ default_cluster_port + loop.index }},
+  name: {{ inventory_hostname }},
+  port: {{ (groups['main'] | sort).index(inventory_hostname) + default_nats_cluster_port }},
   routes: [
-  {% for host in group['all'] %}
-    "nats-route://{{hostvars[host].ansible_hostname}}:{{nats_cluster[host].port}}",
+  {% for host in (groups['main'] | sort) %}
+    "nats-route://{{host}}:{{(groups['main'] | sort).index(host) + default_nats_cluster_port}}",
   {% endfor %}
   ],
 }
