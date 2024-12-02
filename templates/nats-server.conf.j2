@@ -25,7 +25,7 @@ accounts: {
 
 {% if hostvars|length > 1 %}
 cluster: {
-  name: {{ inventory_hostname }},
+  name: {{ nats_cluster_name }},
   port: {{ (groups['main'] | sort).index(inventory_hostname) + default_nats_cluster_port }},
   routes: [
   {% for host in (groups['main'] | sort) %}
