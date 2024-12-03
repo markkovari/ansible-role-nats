@@ -8,7 +8,6 @@ server_name: {{ nats_name }}
 
 include nats-sys.conf
 
-{% if nats_accounts|length %}
 accounts: {
   {% for nats_account in nats_accounts %}
     {{ nats_account.name }}: {
@@ -19,9 +18,14 @@ accounts: {
         {% endfor %}
       ],
     {% endfor %}
+  },
+  SYS: {
+    users: [
+      { user: {{ nats_sys_user }}, password: {{ nats_sys_password }} },
+    ],
   }
+  system_account: SYS
 }
-{% endif %}
 
 {% if hostvars|length > 1 %}
 cluster: {
