@@ -20,12 +20,12 @@ accounts: {
     {% endfor %}
   },
   SYS: {
-    users: [
-      { user: {{ nats_sys_user }}, password: {{ nats_sys_password }} },
-    ],
+    users: [{user: {{ nats_sys_user }}, password: {{ nats_sys_password }}}]
   }
-  system_account: SYS
 }
+
+# reassure that the system account is always present and called SYS
+system_account: SYS
 
 {% if hostvars|length > 1 %}
 cluster: {
