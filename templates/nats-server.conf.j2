@@ -20,9 +20,7 @@ accounts: {
     {% endfor %}
   },
   SYS: {
-    users: [
-      { user: {{ nats_sys_user }}, password: {{ nats_sys_password }} },
-    ],
+    users: [{user: {{ nats_sys_user }}, password: {{ nats_sys_password }}}]
   }
 }
 
