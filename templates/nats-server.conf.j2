@@ -23,6 +23,9 @@ accounts: {
     users: [{user: {{ nats_sys_user }}, password: {{ nats_sys_password }}}]
   }
 }
+{% if nats_credentials_used %}
+nats_creds = "{{ nats_credentials_file_path_dest }}"
+{% endif %}
 
 # reassure that the system account is always present and called SYS
 system_account: NATS_SYS

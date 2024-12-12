@@ -18,6 +18,15 @@
   notify:
     - Reload daemon nats-server
 
+- name: Copy over credentials for nats
+  ansible.builtin.copy:
+    src: "{{ nats_credentials_file_path_source }}"
+    dest: "{{ nats_credentials_file_path_target }}"
+    owner: root
+    group: root
+    mode: "0755"
+  when: nats_credentials_used
+
 - name: Ensure NATS service is started and enabled on boot.
   ansible.builtin.service:
     name: nats-server

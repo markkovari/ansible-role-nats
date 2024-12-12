@@ -50,3 +50,7 @@ nats_accounts:
         password: "other_pass"
 
 default_nats_cluster_port: 6222
+
+nats_credentials_used: false
+nats_credentials_file_path_source: ""
+nats_credentials_file_path_target: "/etc/nats-server.creds"
