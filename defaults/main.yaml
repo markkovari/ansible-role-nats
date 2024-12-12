@@ -51,6 +51,8 @@ nats_accounts:
 
 default_nats_cluster_port: 6222
 
-nats_credentials_used: false
-nats_credentials_file_path_source: ""
-nats_credentials_file_path_target: "/etc/nats-server.creds"
+nats_leaf_nodes_port: 7422
+
+nats_resolver_used: false
+nats_resolver_file_path_source: "./resolver.conf"
+nats_resolver_file_path_target: "/etc/resolver.conf"
