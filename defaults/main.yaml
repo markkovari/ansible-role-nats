@@ -51,6 +51,7 @@ nats_accounts:
 
 default_nats_cluster_port: 6222
 
+nats_leaf_nodes_enabled: true
 nats_leaf_nodes_port: 7422
 
 nats_resolver_used: false

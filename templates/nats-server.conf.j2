@@ -60,3 +60,9 @@ jetstream {
   {% endif %}
 }
 {% endif %}
+
+{% if nats_leaf_nodes_enabled %}
+leafnodes {
+    port: {{ nats_leaf_nodes_port }}
+}
+{% endif %}
