@@ -9,26 +9,31 @@ server_name: {{ nats_name }}
 include nats-sys.conf
 
 accounts: {
-  {% for nats_account in nats_accounts %}
-    {{ nats_account.name }}: {
-      jetstream: enabled,
-      users: [
-        {% for user in nats_account.users %}
-          { user: {{ user.user }}, password: {{ user.password }} },
-        {% endfor %}
-      ],
-    {% endfor %}
-  },
-  NATS_SYS: {
-    users: [{user: {{ nats_sys_user }}, password: {{ nats_sys_password }}}]
-  }
+  {% if !nats_resolver_used %}
+    {% for nats_account in nats_accounts %}
+      {{ nats_account.name }}: {
+        jetstream: enabled,
+        users: [
+          {% for user in nats_account.users %}
+            { user: {{ user.user }}, password: {{ user.password }} },
+          {% endfor %}
+        ],
+      {% endfor %}
+    },
+    NATS_SYS: {
+      users: [{user: {{ nats_sys_user }}, password: {{ nats_sys_password }}}]
+    }
+  {% endif %}
 }
 {% if nats_resolver_used %}
 include {{ nats_resolver_file_path_target }}
 {% endif %}
 
+{% if !nats_resolver_used %}
 # reassure that the system account is always present and called SYS
 system_account: NATS_SYS
+{% endif %}
+
 
 {% if hostvars|length > 1 %}
 cluster: {
