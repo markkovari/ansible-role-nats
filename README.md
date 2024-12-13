@@ -11,6 +11,33 @@ Feel free to open an issue or a pull request if you have any suggestions or impr
 NATS.io is a simple, secure, and high-performance open source messaging system for cloud-native applications, IoT messaging, and microservices architectures.
 This Ansible role installs it and then provide its configuration.
 
+> [!INFO]
+> Currently creating the credentials file is manual and requires a bit of modification to the file. This _might_ be automated in the future.
+## Creds file creation steps
+
+1. install the [nsc tool](https://docs.nats.io/using-nats/nats-tools/nsc)
+1. create a new operator account
+```console
+nsc add operator {{MyOperator}}
+```
+1. Find the operator account in the `~/.nkeys/{{MyOperator}}/` directory
+1. Copy the `{{MyOperator}}.creds` file to the root of the project
+1. Create a resolver file `{{MyOperator}}.res` with the following content
+1. Create a new user account
+```console
+nsc add user {{MyUser}}
+```
+1. Create a resolver file `{{MyUser}}.conf` with the following content
+```console
+nsc generate config --nats-resolver > {{resolver.conf}}
+```
+where `{{resolver.conf}}` is the file created in the previous step, called the same as `nats_resolver_file_path_source` in the `defaults/main.yaml` file.
+1. modify the file to target a jwt folder, which exists (should be created by ansible later)
+
+
+Be careful not to commit the file, it contains sensitive information.
+Use gitignore/ansible-vault/sops to protect the file.
+
 ## Installation
 
 ```yaml
