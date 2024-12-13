@@ -7,7 +7,15 @@ http_port: {{ nats_http_port }}
 server_name: {{ nats_name }}
 
 accounts: {
-
+  {% for nats_account in nats_accounts %}
+  "{{ nats_account.name }}": {
+    users: [
+      {% for user in nats_account.users %}
+      { user: "{{ user.user }}", password: "{{ user.password }}" },
+      {% endfor %}
+    ],
+  },
+  {% endfor %}
 }
 
 
