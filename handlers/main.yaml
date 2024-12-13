@@ -14,9 +14,3 @@
     state: stopped
     daemon_reload: true
     name: nats-server
-
-- name: Reload daemon nats-exporter
-  ansible.builtin.systemd:
-    state: stopped
-    daemon_reload: true
-    name: nats-exporter

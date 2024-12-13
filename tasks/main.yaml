@@ -1,10 +1,6 @@
 - name: Setup NATS server
   ansible.builtin.include_tasks: nats-server.yaml
 
-- name: Setup NATS exporter
-  ansible.builtin.include_tasks: exporter.yaml
-  when: nats_exporter_enabled == 'true'
-
 - name: Setup NATS CLI
   ansible.builtin.include_tasks: natscli.yaml
   when: natscli_enabled == 'true'

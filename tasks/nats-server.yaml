@@ -18,15 +18,6 @@
   notify:
     - Reload daemon nats-server
 
-- name: Copy over resolver for nats
-  ansible.builtin.copy:
-    src: "{{ nats_resolver_file_path_source }}"
-    dest: "{{ nats_resolver_file_path_target }}"
-    owner: root
-    group: root
-    mode: "0755"
-  when: nats_resolver_used
-
 - name: Ensure NATS service is started and enabled on boot.
   ansible.builtin.service:
     name: nats-server
